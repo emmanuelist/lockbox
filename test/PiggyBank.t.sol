@@ -9,6 +9,10 @@ contract PiggyBankTest is Test {
     address public owner = address(this);
     address public user = address(0x1234);
     
+    // Event declarations for testing
+    event Deposited(address indexed depositor, uint256 amount);
+    event Withdrawn(address indexed withdrawer, uint256 amount);
+    
     receive() external payable {}
 
     function setUp() public {
@@ -72,7 +76,7 @@ contract PiggyBankTest is Test {
         uint256 depositAmount = 1 ether;
         
         vm.expectEmit(true, false, false, true);
-        emit PiggyBank.Deposited(address(this), depositAmount);
+        emit Deposited(address(this), depositAmount);
         
         piggyBank.deposit{value: depositAmount}();
     }
@@ -84,7 +88,7 @@ contract PiggyBankTest is Test {
         vm.warp(piggyBank.unlockTime() + 1);
         
         vm.expectEmit(true, false, false, true);
-        emit PiggyBank.Withdrawn(owner, depositAmount);
+        emit Withdrawn(owner, depositAmount);
         
         piggyBank.withdraw();
     }
