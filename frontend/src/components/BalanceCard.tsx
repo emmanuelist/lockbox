@@ -39,6 +39,13 @@ export function BalanceCard() {
         </div>
       </div>
 
+      {isEmpty ? (
+        <EmptyState
+          icon="🔒"
+          title="No funds locked yet"
+          description="Make your first deposit to start saving with discipline"
+        />
+      ) : (
       <div className="timelock-info">
         {isUnlocked ? (
           <div className="unlocked">
@@ -77,6 +84,7 @@ export function BalanceCard() {
           </div>
         )}
       </div>
+      )}
     </div>
   )
 }
